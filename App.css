@@ -26,6 +26,11 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.res-container > a {
+  text-decoration: none;
+  color: black;
+}
 .res-card {
   margin: 5px;
   padding: 5px;
@@ -93,7 +98,7 @@ h5 {
   }
 }
 
-.btn{
+.btn {
   margin: 10px;
   padding: 10px;
   cursor: pointer;
@@ -119,7 +124,6 @@ h5 {
   animation: shimmer 1.5s infinite; /* Adjust the duration as needed */
 }
 
-
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -129,25 +133,56 @@ h5 {
   }
 }
 
-.log-btn{
+.log-btn {
   padding: 0 20px;
   margin: 5px;
 }
 
-.filter{
+.filter {
   position: relative;
   display: flex;
 }
 
-.serach-box{
+.serach-box {
   width: 217px;
   margin: 10px 0px;
   padding: 10px;
   outline: none;
 }
 
-.serach-btn{
+.serach-btn {
   position: absolute;
   left: 336px;
   margin: 10px 0px;
+}
+
+.menu-list {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  left: 10%;
+}
+
+.menu-list > ul {
+  width: 100%;
+}
+
+.menu-list .menu-list-card {
+  padding: 0px 55px;
+  border: 1px solid black;
+  outline: double;
+}
+
+.menu-list .menu-list-card > ul {
+  list-style-type: disclosure-closed;
+  width: 300px;
+}
+
+.menu-list-card > ul > h4 {
+  font-size: 32px;
+  text-decoration: underline;
+}
+
+.menu-list-card p {
+  font-size: 24px;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import ShimmerUi from "./ShimmerUi";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [resData1, setResData] = useState([]);
@@ -14,14 +15,15 @@ const Body = () => {
   };
 
   const onSearch = () => {
-    const SearchedRest = resData1.filter((restour)=>{
-        return restour?.info?.name.toLowerCase().includes(searchText.toLowerCase()) 
+    const SearchedRest = resData1.filter((restour) => {
+      return restour?.info?.name
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
     });
     setFilteredRest(SearchedRest);
   };
 
   useEffect(() => {
-    console.log("useEffect called..!");
     fetchData();
   }, []);
 
@@ -30,15 +32,14 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const jsonRes = await dataPromise.json();
-    console.log(
-      jsonRes.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
-    );
     setResData(
       jsonRes?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
-    setFilteredRest(jsonRes?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-      ?.restaurants)
+    setFilteredRest(
+      jsonRes?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
   };
 
   return (
@@ -71,10 +72,12 @@ const Body = () => {
         ) : (
           filteredRest.map((restoCard) => {
             return (
-              <RestaurantCard
-                key={restoCard?.info?.id}
-                restoCardInfo={restoCard?.info}
-              />
+              <Link to={`/restaurants/${restoCard?.info?.id}`} key={restoCard?.info?.id}>
+                <RestaurantCard
+                  key={restoCard?.info?.id}
+                  restoCardInfo={restoCard?.info}
+                />
+              </Link>
             );
           })
         )}
