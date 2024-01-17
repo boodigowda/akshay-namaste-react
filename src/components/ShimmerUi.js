@@ -1,6 +1,7 @@
 import React from "react";
 
 const ShimmerUi = () => {
+  console.log("Shimmer Called");
   return (
     <div className="shimmer-container">
       <div className="shimmer-card">

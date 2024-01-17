@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [resData1, setResData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRest, setFilteredRest] = useState([]);
+
+  const onlineStatus = useOnlineStatus();
+  if(!onlineStatus) return <h1>plz check your internet connection...!</h1>
   const topRatedRestaourant = () => {
     const filteredValue = resData1.filter((card) => {
       return card?.info?.avgRating > 4.2;

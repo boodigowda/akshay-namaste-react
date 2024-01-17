@@ -1,21 +1,14 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
 import ShimmerUi from "./ShimmerUi";
 import { useParams } from "react-router-dom";
-import { ITEM_CATEGORY, RESTAU_MENU_URL } from "../utils/constants";
+import { ITEM_CATEGORY } from "../utils/constants";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RestraurantMenu = () => {
   const { restId } = useParams();
-  const [restMenuData, setRestMenuData] = useState([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const restMenuData = useRestaurantMenu(restId); //customHook
 
-  const fetchData = async () => {
-    const restMenuPromise = await fetch(RESTAU_MENU_URL + restId);
-    const restDataJson = await restMenuPromise.json();
-    setRestMenuData(restDataJson.data);
-  };
-  if (restMenuData.length === 0) return <ShimmerUi />;
+  if (restMenuData === null) return <ShimmerUi />;
 
   const { name, cuisines, cloudinaryImageId, costForTwoMessage } =
     restMenuData?.cards[0]?.card?.card?.info;
@@ -33,14 +26,16 @@ const RestraurantMenu = () => {
           return menu?.card?.card["@type"].split(".")[
             menu?.card?.card["@type"].split(".").length - 1
           ] === ITEM_CATEGORY ? (
-            <div className="menu-list-card">
+            <div className="menu-list-card" key={menu?.card?.info?.id}>
               <ul>
                 <h4>{menu?.card?.card?.title}</h4>
                 {menu?.card?.card?.itemCards.map((subMenu) => {
                   return (
                     <li key={subMenu?.card?.info?.id}>
-                      <p>{subMenu?.card?.info?.name} - Rs{" "}
-                      {subMenu?.card?.info?.price / 100}/-</p>
+                      <p>
+                        {subMenu?.card?.info?.name} - Rs{" "}
+                        {subMenu?.card?.info?.price / 100}/-
+                      </p>
                     </li>
                   );
                 })}
