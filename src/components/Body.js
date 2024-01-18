@@ -10,7 +10,7 @@ const Body = () => {
   const [filteredRest, setFilteredRest] = useState([]);
 
   const onlineStatus = useOnlineStatus();
-  if(!onlineStatus) return <h1>plz check your internet connection...!</h1>
+  if (!onlineStatus) return <h1>plz check your internet connection...!</h1>;
   const topRatedRestaourant = () => {
     const filteredValue = resData1.filter((card) => {
       return card?.info?.avgRating > 4.2;
@@ -48,35 +48,37 @@ const Body = () => {
 
   return (
     <div className="body">
-      <div className="filter">
-        <button className="btn" onClick={topRatedRestaourant}>
-          Top Rated Resto
-        </button>
-        <input
-          type="text"
-          className="serach-box"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <button className="serach-btn" onClick={onSearch}>
-          <img
-            src="https://cdn3.iconfinder.com/data/icons/feather-5/24/search-512.png"
-            alt=""
-            width="30px"
+      <div className="filter flex">
+        <div className="search m-4 px-4">
+          <input
+            type="text"
+            className="border border-solid border-black px-4 py-2 rounded-md focus:outline-none focus:border-black-500 transition-all duration-300 ease-in-out hover:bg-gray-100"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-        </button>
-        <button className="btn" onClick={() => fetchData()}>
-          Reset
-        </button>
+          <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={onSearch}>
+            search
+          </button>
+
+          <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
+            onClick={topRatedRestaourant}
+          >
+            Top Rated Resto
+          </button>
+        </div>
       </div>
 
-      <div className="res-container">
+      <div className="res-container flex flex-wrap">
         {filteredRest.length === 0 ? (
           <ShimmerUi />
         ) : (
           filteredRest.map((restoCard) => {
             return (
-              <Link to={`/restaurants/${restoCard?.info?.id}`} key={restoCard?.info?.id}>
+              <Link
+                to={`/restaurants/${restoCard?.info?.id}`}
+                key={restoCard?.info?.id}
+              >
                 <RestaurantCard
                   key={restoCard?.info?.id}
                   restoCardInfo={restoCard?.info}
