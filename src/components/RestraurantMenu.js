@@ -34,7 +34,7 @@ const RestraurantMenu = () => {
             category={category?.card?.card}
             showItems={index === showIndex ? true : false}
             setShowItems={() => {
-              setShowIndex(index)
+              setShowIndex(index === showIndex ? null : index)
             }}
             key={category?.card?.card?.title}
           />
