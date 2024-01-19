@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [resData1, setResData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRest, setFilteredRest] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const data = useContext(UserContext);
 
   const onlineStatus = useOnlineStatus();
   if (!onlineStatus) return <h1>plz check your internet connection...!</h1>;
@@ -46,6 +49,16 @@ const Body = () => {
     );
   };
 
+  const onUserInputChange = (e) => { 
+      // setTimeout(()=>{
+          setUserInput(e.target.value)
+      // },1000)
+  }
+
+  const OnChangeUserClick = () => { 
+    data.setUserInfo(userInput)
+  }
+
   return (
     <div className="body">
       <div className="filter flex">
@@ -56,7 +69,10 @@ const Body = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={onSearch}>
+          <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
+            onClick={onSearch}
+          >
             search
           </button>
 
@@ -66,6 +82,13 @@ const Body = () => {
           >
             Top Rated Resto
           </button>
+          <input
+            type="text"
+            className="border border-solid border-black px-4 py-2 rounded-md focus:outline-none focus:border-black-500 transition-all duration-300 ease-in-out hover:bg-gray-100"
+            value={userInput}
+            onChange={(e)=>{onUserInputChange(e)}}
+          />
+          <button onClick={OnChangeUserClick} className="bg-teal-200 rounded-lg p-3 ml-4">Change User</button>
         </div>
       </div>
 

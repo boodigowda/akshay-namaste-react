@@ -7,6 +7,7 @@ import RestaurantCategory from "./RestaurantCategory";
 
 const RestraurantMenu = () => {
   const { restId } = useParams();
+  const dummyData = "DUMMY DATA....!";
   const [showIndex, setShowIndex] = useState(null);
   const restMenuData = useRestaurantMenu(restId); //customHook
 
@@ -28,7 +29,7 @@ const RestraurantMenu = () => {
       <h3 className="text-lg text-gray-600 mb-2">{cuisines.join(", ")}</h3>
       <h3 className="text-lg text-gray-600 mb-2">{costForTwoMessage}</h3>
       <h2 className="text-2xl font-bold mb-4">Menu</h2>
-      {categories?.map((category,index) => {
+      {categories?.map((category, index) => {
         return (
           <RestaurantCategory
             category={category?.card?.card}

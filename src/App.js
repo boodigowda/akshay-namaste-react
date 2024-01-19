@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import { Outlet, createBrowserRouter } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 // import Error from "./components/Error";
 // import RestraurantMenu from "./components/RestraurantMenu";
 import ShimmerUi from "./components/ShimmerUi";
+import UserContext from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -18,12 +19,24 @@ const ContactUs = lazy(() => import("./components/ContactUs"));
 const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
+  //authentication
+
+  const [userInfo, setUserInfo] = useState("");
+
+  useEffect(() => {
+    const data = {
+      name: "Akshay Saini",
+    };
+    setUserInfo(data.name);
+  }, []);
   return (
     <React.Fragment>
-      <Suspense fallback={<ShimmerUi/>}>
-        <Header />
-        <Outlet />
-      </Suspense>
+      <UserContext.Provider value={{ loggedInUser: userInfo, setUserInfo }}>
+        <Suspense fallback={<ShimmerUi />}>
+          <Header />
+          <Outlet />
+        </Suspense>
+      </UserContext.Provider>
     </React.Fragment>
   );
 };

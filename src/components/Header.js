@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   const [logBtn, setLogBtn] = useState("LogIn");
+  const data = useContext(UserContext)
+  console.log(data);
   const onLogBtnClick = () => {
     logBtn === "LogIn" ? setLogBtn("LogOut") : setLogBtn("LogIn") 
   }
@@ -22,6 +25,7 @@ const Header = () => {
           <button className="log-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mx-2 rounded" onClick={onLogBtnClick}>
             {logBtn}
           </button>
+          <li>{data.loggedInUser}</li>
         </ul>
       </div>
     </div>
